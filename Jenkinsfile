@@ -31,7 +31,7 @@ pipeline {
             echo 'Weather API build successfully..............'
         }
         failure {
-            echo 'Build was unsuccesful, check log for more details.............'
+            echo 'Build was unsuccesful, check log for more details OK.............'
         }
     }
 }
