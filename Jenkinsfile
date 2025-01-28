@@ -22,7 +22,7 @@ pipeline {
         }
         stage ('Build Project'){
             steps {
-                echo 'Building Project ...............'
+                echo 'Building Projectx ...............'
             }
         }   
     }
