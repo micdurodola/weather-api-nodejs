@@ -5,7 +5,7 @@ pipeline {
     //     PATH = "${NODE_HOME}:${env.PATH}"
 
     // }
-    tools{
+    tools {
         nodejs : 'NodeJS'
     }
     stages {
