@@ -1,15 +1,15 @@
 pipeline {
     agent any 
-    environment{
-        NODE_HOME = '/usr/bin/node'
-        PATH = "${NODE_HOME}:${env.PATH}"
+    // environment{
+    //     NODE_HOME = '/usr/bin/node'
+    //     PATH = "${NODE_HOME}:${env.PATH}"
 
-    }
+    // }
     stages {
         stage('Checkout code'){
             steps {
                 echo 'Checking out code from repository...........'
-                checkout scm  // Fetch code from repository
+                git branch: 'main', credentialsId: '7bde7093-fb91-435b-b101-da11e49e7b09', url: 'https://github.com/micdurodola/weather-api-nodejs.git'
 
             }
         }
