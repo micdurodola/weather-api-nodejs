@@ -35,7 +35,7 @@ pipeline {
             steps{
                 script{
             echo 'Scanning Image....................'
-            sh "trivy --severity HIGH,CRITICAL --no-progress --no-update image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest"
+            sh "trivy --severity HIGH,CRITICAL --no-progress --skip-update image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest"
         }
 
             }
