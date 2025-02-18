@@ -1,10 +1,9 @@
 pipeline {
     agent any 
-    // environment{
-    //     NODE_HOME = '/usr/bin/node'
-    //     PATH = "${NODE_HOME}:${env.PATH}"
+    environment{
+        DOCKER_HUB_REPO = 'codex234/api-weather'
 
-    // }
+    }
     tools {
         nodejs 'NodeJS'
     }
@@ -23,9 +22,12 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage ('Build Project'){
+        stage ('Build Docker Image'){
             steps {
-                echo 'Building Projectx ...............'
+               script{
+                 echo 'Building Projectx ...............'
+                 docker.build("${DOCKER_HUB_REPO}:latest")
+               }
             }
         }   
     }
