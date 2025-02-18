@@ -25,16 +25,20 @@ pipeline {
         stage ('Build Docker Image'){
             steps {
                script{
-                 echo 'Building Projectx ...............'
+                 echo 'Building Project ...............'
                  docker.build("${DOCKER_HUB_REPO}:latest")
                }
             }
         }  
         stage('Scan Docker Image:......................') {
-        script{
+            steps{
+                script{
             echo 'Scanning Image....................'
             sh "trivy --severity HIGH,CRITICAL --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest"
         }
+
+            }
+
         }
     }
     post {
