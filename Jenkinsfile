@@ -2,7 +2,7 @@ pipeline {
     agent any 
     environment{
         DOCKER_HUB_REPO = 'codex234/api-weather'
-        DOCKER_HUB_CREDENTIAL_ID = 'weather-api-image docker'
+        DOCKER_HUB_CREDENTIAL_ID = 'weather-api'
 
     }
     tools {
