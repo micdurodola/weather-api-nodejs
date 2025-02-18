@@ -29,7 +29,13 @@ pipeline {
                  docker.build("${DOCKER_HUB_REPO}:latest")
                }
             }
-        }   
+        }  
+        stage('Scan Docker Image:......................') {
+        script{
+            echo 'Scanning Image....................'
+            sh "trivy --severity HIGH,CRITICAL --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest"
+        }
+        }
     }
     post {
         success {
