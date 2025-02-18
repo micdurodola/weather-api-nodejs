@@ -2,6 +2,7 @@ pipeline {
     agent any 
     environment{
         DOCKER_HUB_REPO = 'codex234/api-weather'
+        DOCKER_HUB_CREDENTIAL_ID = 'weather-api-image docker'
 
     }
     tools {
@@ -26,7 +27,7 @@ pipeline {
             steps {
                script{
                  echo 'Building Project ...............'
-                 docker.build("${DOCKER_HUB_REPO}:latest")
+                 dockerImage = docker.build("${DOCKER_HUB_REPO}:latest")
                }
             }
         }  
@@ -34,11 +35,21 @@ pipeline {
             steps{
                 script{
             echo 'Scanning Image....................'
-            sh "trivy --severity HIGH,CRITICAL --no-progress image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest"
+            sh "trivy --severity HIGH,CRITICAL --no-progress --no-update image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest"
         }
 
             }
 
+        }
+        stage('Push docker image................'){
+            steps{
+                script{
+                    echo 'Pushing docker image'
+                    docker.withRegistry('https://registry.hub.docker.com', "${DOCKERHUB_CREDENTIAL_ID}"){
+                        dockerImage.push("laest")
+                    }
+                }
+            }
         }
     }
     post {
