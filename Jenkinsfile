@@ -5,6 +5,9 @@ pipeline {
     //     PATH = "${NODE_HOME}:${env.PATH}"
 
     // }
+    tools{
+        nodejs : 'NodeJS'
+    }
     stages {
         stage('Checkout code'){
             steps {
@@ -17,6 +20,7 @@ pipeline {
         stage ('Install dependencies') {
             steps {
                 echo 'Installing dependencies..............'
+                sh 'npm install'
             }
         }
         stage ('Build Project'){
