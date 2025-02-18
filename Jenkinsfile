@@ -45,7 +45,7 @@ pipeline {
             steps{
                 script{
                     echo 'Pushing docker image'
-                    docker.withRegistry('https://registry.hub.docker.com', "${DOCKERHUB_CREDENTIAL_ID}"){
+                    docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_HUB_CREDENTIAL_ID}"){
                         dockerImage.push("laest")
                     }
                 }
