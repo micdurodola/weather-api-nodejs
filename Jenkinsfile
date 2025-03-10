@@ -1,63 +1,35 @@
 pipeline {
-    agent any 
-    environment{
-        DOCKER_HUB_REPO = 'codex234/api-weather'
-        DOCKER_HUB_CREDENTIAL_ID = 'weather-api'
-
-    }
-    tools {
-        nodejs 'NodeJS'
-    }
-    stages {
-        stage('Checkout code'){
-            steps {
-                echo 'Checking out code from repository...........'
-                git branch: 'main', credentialsId: '7bde7093-fb91-435b-b101-da11e49e7b09', url: 'https://github.com/micdurodola/weather-api-nodejs.git'
-
-            }
-        }
-
-        stage ('Install dependencies') {
-            steps {
-                echo 'Installing dependencies..............'
-                sh 'npm install'
-            }
-        }
-        stage ('Build Docker Image'){
-            steps {
-               script{
-                 echo 'Building Project ...............'
-                 dockerImage = docker.build("${DOCKER_HUB_REPO}:latest")
-               }
-            }
-        }  
-        stage('Scan Docker Image:......................') {
+    agent any
+    stages{
+        stage('Code checkout from repo...........'){
             steps{
-                script{
-            echo 'Scanning Image....................'
-            sh "trivy --severity HIGH,CRITICAL --no-progress --skip-update image --format table -o trivy-scan-report.txt ${DOCKER_HUB_REPO}:latest"
-        }
-
+                echo 'Checking out the code from repo.............'
             }
-
+            
         }
-        stage('Push docker image................'){
+        stage('Install dependencies'){
             steps{
-                script{
-                    echo 'Pushing docker image'
-                    docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_HUB_CREDENTIAL_ID}"){
-                        dockerImage.push("laest")
-                    }
-                }
+                echo 'Installing dependencies .............'
             }
+            
         }
-    }
-    post {
-        success {
-            echo 'Weather API build successfully..............'
+        stage('Build docker Image'){
+            steps{
+                echo 'Building docker images .............'
+            }
+            
         }
-        failure {
-            echo 'Build was unsuccesful, check log for more details OK.............'
+        stage('Push docker image'){
+            steps{
+                echo 'Pushing docker image into private/public repo  .............'
+            }
+            
+        }
+        stage('Deploying cntainer'){
+            steps{
+                echo 'Deploy working container into production server .............'
+            }
+            
         }
     }
 }
